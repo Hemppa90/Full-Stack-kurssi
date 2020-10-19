@@ -1,10 +1,7 @@
 
-function i(){
-
-
-}
-
-const f =() =>{
+const f = () => {
   console.log("Moro")
 
 }
+
+f()

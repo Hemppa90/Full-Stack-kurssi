@@ -8,5 +8,3 @@ const f =() =>{
   console.log("Moro")
 
 }
-
-svsdv

@@ -136,18 +136,20 @@ function App() {
   }
 
   const buttononyhtäkuinPressed = () => {
-    //switch casea tähän
-    if(operaattori == '/') {
-      setVastaus(merkki1 / merkki2)
-    }
-    if(operaattori == '*') {
-      setVastaus(merkki1 * merkki2)
-    }
-    if(operaattori == '+') {
-      setVastaus(parseInt(merkki1) + parseInt(merkki2))
-    }
-    if(operaattori == '-') {
-      setVastaus(merkki1 - merkki2)
+    switch(operaattori) {
+      case '/':
+        setVastaus(merkki1 / merkki2)
+        break;
+      case '*':
+        setVastaus(merkki1 * merkki2)
+        break;
+      case '+':
+        setVastaus(parseInt(merkki1) + parseInt(merkki2))
+        break;
+      case '-':
+        setVastaus(merkki1 - merkki2)
+        break;
+      default:
     }
   }
 

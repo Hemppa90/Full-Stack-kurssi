@@ -1,0 +1,91 @@
+.container {
+  display: flex;
+  justify-content: left;
+  margin: 50px;
+}
+
+.container2 {
+  display: flex;
+  margin: 40px;
+}
+
+.container3 {
+  display: flex;
+  margin: 40px;
+}
+
+.myTable {
+  border-collapse: collapse;
+}
+
+.header {
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-weight: bold;
+}
+
+.table_wrapper {
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  height: 300px;
+  width: 300px;
+  border: 1px solid black;
+}
+
+.table_row {
+  width: 150px;
+}
+
+.table_row:hover {
+  background-color: rgb(238, 234, 234);
+  cursor: pointer;
+}
+
+.table_data {
+  border-bottom: 1px solid black;
+  text-align: center;
+  width: 150px;
+  height: 25px;
+}
+
+.arrowbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.arrow {
+  border-radius: 10px;
+}
+
+.arrow:hover {
+  background-color: rgb(238, 234, 234);
+  cursor: pointer;
+}
+
+.sort_button {
+  text-align: center;
+}
+
+.sort_button:hover {
+  text-align: center;
+  cursor: pointer;
+  background-color: rgb(238, 234, 234);
+}
+
+.list1_input {
+}
+
+.list2_input {
+  margin-left: 225px;
+}
+
+.filterButton1 {
+  margin-left: 10px;
+}
+
+.filterButton2 {
+  margin-left: 10px;
+}

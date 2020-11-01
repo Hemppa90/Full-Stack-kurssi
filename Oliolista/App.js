@@ -57,8 +57,6 @@ function App() {
   
   const generateTable = (list) => {
 
-
-
     if(list.length != 0) {
       return (
         <table className="myTable">

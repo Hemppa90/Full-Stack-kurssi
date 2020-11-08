@@ -8,7 +8,8 @@ import './App.css';
 function App() {
 
 //KOMMENTTIA KOODISTA: Checkboxit ei ole vielä loppuun asti hiottu. Material-ui checkboxien kanssa tuli ongelmia siinä, että ne
-//eivät näyttäneet checked-tilaa sivua uudelleen ladattaessa (F5). Tein siis testausta varten purkkaviritelmän html checkboxeilla.
+//eivät näyttäneet checked-tilaa sivua uudelleen ladattaessa (F5). Tein siis testausta varten purkkaviritelmän html checkboxeilla
+//toistaiseksi.
 
 //STATES
 const [questions, setQuestions] = useState(

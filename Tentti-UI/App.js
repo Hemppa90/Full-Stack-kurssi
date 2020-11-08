@@ -132,13 +132,18 @@ const generateQuestions = (questions, amount) => {
     else if (answers == false) {
       question_list.push(<div className="question_content"><Checkbox onChange={(event) => checked(event, question, index)}/><p>{data_question}</p></div>)
     }
+    else if (data_question.[1] == true && data_question.[2] == true){
+      question_list.push(<div className="question_content"><Checkbox checked={true}/><Checkbox checked={true}/><p>{data_question}</p></div>)
+    }
+    else if (data_question.[1] == true){
+      question_list.push(<div className="question_content"><Checkbox checked={true}/><Checkbox/><p>{data_question}</p></div>)
+    }
     else if (data_question.[2] == true){
       question_list.push(<div className="question_content"><Checkbox/><Checkbox checked={true}/><p>{data_question}</p></div>)
     }
     else {
       question_list.push(<div className="question_content"><Checkbox/><Checkbox/><p>{data_question}</p></div>)
     }
-
   }
   return question_list
 }

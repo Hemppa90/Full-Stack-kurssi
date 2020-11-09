@@ -8,8 +8,7 @@ import './App.css';
 function App() {
 
 //KOMMENTTIA KOODISTA: Checkboxit ei ole vielä loppuun asti hiottu. Material-ui checkboxien kanssa tuli ongelmia siinä, että ne
-//eivät näyttäneet checked-tilaa sivua uudelleen ladattaessa (F5). Tein siis testausta varten purkkaviritelmän html checkboxeilla
-//toistaiseksi.
+//eivät näyttäneet checked-tilaa sivua uudelleen ladattaessa (F5). Tein siis testausta varten purkkaviritelmän html checkboxeilla.
 
 //STATES
 const [questions, setQuestions] = useState(
@@ -134,16 +133,16 @@ const generateQuestions = (questions, amount) => {
       question_list.push(<div className="question_content"><Checkbox onChange={(event) => checked(event, question, index)}/><p>{data_question}</p></div>)
     }
     else if (data_question.[1] == true && data_question.[2] == true){
-      question_list.push(<div className="question_content"><Checkbox checked={true}/><Checkbox checked={true}/><p>{data_question}</p></div>)
+      question_list.push(<div className="question_content"><Checkbox checked={true} disabled={true}/><Checkbox checked={true}/><p>{data_question}</p></div>)
     }
     else if (data_question.[1] == true){
-      question_list.push(<div className="question_content"><Checkbox checked={true}/><Checkbox/><p>{data_question}</p></div>)
+      question_list.push(<div className="question_content"><Checkbox checked={true} disabled={true}/><Checkbox/><p>{data_question}</p></div>)
     }
     else if (data_question.[2] == true){
-      question_list.push(<div className="question_content"><Checkbox/><Checkbox checked={true}/><p>{data_question}</p></div>)
+      question_list.push(<div className="question_content"><Checkbox disabled={true}/><Checkbox checked={true}/><p>{data_question}</p></div>)
     }
     else {
-      question_list.push(<div className="question_content"><Checkbox/><Checkbox/><p>{data_question}</p></div>)
+      question_list.push(<div className="question_content"><Checkbox disabled={true}/><Checkbox/><p>{data_question}</p></div>)
     }
   }
   return question_list

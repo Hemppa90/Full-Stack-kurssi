@@ -220,6 +220,7 @@ const updateAnswer = (event, index, i, j) => {
   //console.log(Object.values(list_of_questions_copy[index].[i]).[j+1].[0])
 }
 
+//Poistamiseen jäin. Filterillä en päässyt objectin rakenteeseen. Vaiheessa...
 const deleteAnswer = (index, i, j) => {
   let list_of_questions_copy = [...listOfQuestions]
   delete Object.keys(list_of_questions_copy[index].[i])[j+1]

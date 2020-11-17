@@ -1,6 +1,9 @@
 import React, {useState, useReducer} from 'react'
 import './App.css'
 
+//Tenttikäyttöliittymä on vielä refaktoroinnin alaisena niin en pystynyt tätä vielä siinä testaamaan,
+//mutta idea tuli hyvin opittua ja tästä on hyvä lähteä tätä soveltamaan sitten valmiiseen tenttiappiin.
+
 const reducer = (state, action) => {
   switch (action.type) {
     case 'handleAddition':

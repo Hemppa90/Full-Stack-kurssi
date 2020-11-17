@@ -1,55 +1,45 @@
-import React, {useState, useReducer} from 'react'
-import './App.css'
+import React, {useState, useEffect, useMemo} from 'react'
 
-//Tenttikäyttöliittymä on vielä refaktoroitavana niin en pystynyt tätä siihen vielä lisäämään, mutta
-//useReducerin periaate on nyt hyvin ymmärretty ja varmasti hetken päästä helppo implementoida valmiiseen tenttiappiin.
+//En äkkiseltään keksinyt kuinka olisin järkevästi implementoinut tämän hookin
+//tenttikäyttöliittymääni, mutta tein sen sijaan tällaisen yksinkertaisen useMemo-
+//harjoituksen, jossa havainnollistan sen toimintaa.
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case ACTIONS.HANDLE_ADDITION:
-      return {counter: state.counter + 1}
-    case ACTIONS.HANDLE_SUBTRACTION:
-      return {counter: state.counter - 1}
-    case ACTIONS.HANDLE_POW:
-      return {counter: state.counter * 2}
-    default:
-      return state
-  }
-}
+//Tässä harjoitussovelluksessa renderöidään kahta tilaa: tarpeettoman raskasta
+//slow-funktiota ja väriteeman säätöä themeStylesillä. UseMemolla mahdollistetaan
+//teeman värin vaihtaminen ilman, että slow-funktiota joudutaan joka kerta
+//väriä vaihdettaessa kutsumaan.
 
-const ACTIONS = {
-  HANDLE_ADDITION: 'handleAddition',
-  HANDLE_SUBTRACTION: 'handleSubtraction',
-  HANDLE_POW: 'handlePow'
+const slowFunction = (number) => {
+  console.log("Slow function call under way...")
+  for(let i = 0; i < 1000000000; i++) {}
+  return number * 2
 }
 
 function App() {
 
-  //const [counter, setCounter] = useState(0)
-  const [state, dispatch] = useReducer(reducer, {counter: 0})
+  const [number, setNumber] = useState(0)
+  const [dark, setDark] = useState(false)
 
-  
-  const handleAddition = () => {
-    //setCounter(counter + 1)
-    dispatch({type: ACTIONS.HANDLE_ADDITION})
-  }
+  const doubleNumber = useMemo(() => {
+    return slowFunction(number)
+  }, [number])
 
-  const handleSubtraction = () => {
-    //setCounter(counter - 1)
-    dispatch({type: ACTIONS.HANDLE_SUBTRACTION})
-  }
+  const themeStyles = useMemo(() => {
+    return {
+      backgroundColor: dark ? 'black' : 'white',
+      color: dark ? 'white' : 'black'
+    }
+  }, [dark])
 
-  const handlePow = () => {
-    //setCounter(counter * 2)
-    dispatch({type: ACTIONS.HANDLE_POW})
-  }
+  useEffect(() => {
+    console.log('Color theme changed')
+  }, [themeStyles])
 
   return (
     <div>
-      <button onClick={handleSubtraction}>-</button>
-      {state.counter}
-      <button onClick={handleAddition}>+</button>
-      <button onClick={handlePow}>*</button>
+      <input type="number" value={number} onChange={(event) => setNumber(parseInt(event.target.value))}/>
+      <button onClick={() => setDark(prevDark => !prevDark)}>Change Theme</button>
+      <div style={themeStyles}>{doubleNumber}</div>
     </div>
   )
 }

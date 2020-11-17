@@ -1,20 +1,23 @@
 import React, {useState, useReducer} from 'react'
 import './App.css'
 
-//Tenttikäyttöliittymä on vielä refaktoroinnin alaisena niin en pystynyt tätä vielä siinä testaamaan,
-//mutta reducerin idea tuli hyvin opittua ja tästä on hyvä lähteä tätä soveltamaan sitten valmiiseen tenttiappiin.
-
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'handleAddition':
+    case ACTIONS.HANDLE_ADDITION:
       return {counter: state.counter + 1}
-    case 'handleSubtraction':
+    case ACTIONS.HANDLE_SUBTRACTION:
       return {counter: state.counter - 1}
-    case 'handlePow':
+    case ACTIONS.HANDLE_POW:
       return {counter: state.counter * 2}
     default:
       return state
   }
+}
+
+const ACTIONS = {
+  HANDLE_ADDITION: 'handleAddition',
+  HANDLE_SUBTRACTION: 'handleSubtraction',
+  HANDLE_POW: 'handlePow'
 }
 
 function App() {
@@ -25,17 +28,17 @@ function App() {
   
   const handleAddition = () => {
     //setCounter(counter + 1)
-    dispatch({type: 'handleAddition'})
+    dispatch({type: ACTIONS.HANDLE_ADDITION})
   }
 
   const handleSubtraction = () => {
     //setCounter(counter - 1)
-    dispatch({type: 'handleSubtraction'})
+    dispatch({type: ACTIONS.HANDLE_SUBTRACTION})
   }
 
   const handlePow = () => {
     //setCounter(counter * 2)
-    dispatch({type: 'handlePow'})
+    dispatch({type: ACTIONS.HANDLE_POW})
   }
 
   return (

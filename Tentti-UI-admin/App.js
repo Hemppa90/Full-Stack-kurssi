@@ -1,334 +1,410 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import uuid from 'react-uuid'
+import axios from 'axios'
+import Checkbox from '@material-ui/core/Checkbox'
+import Button from '@material-ui/core/Button'
+import Paper from '@material-ui/core/Paper'
+import TextField from '@material-ui/core/TextField'
+import DeleteIcon from '@material-ui/icons/Delete'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline'
 import './App.css';
+import Question from './Question'
+import AdminQuestion from './AdminQuestion'
+import Chart from './Chart'
 
-//TENTTI-UI
 function App() {
 
-//KOMMENTTIA KOODISTA: Checkboxit ei ole vielä loppuun asti hiottu. Material-ui checkboxien kanssa tuli ongelmia siinä, että ne
-//eivät näyttäneet checked-tilaa sivua uudelleen ladattaessa (F5). Tein siis testausta varten purkkaviritelmän html checkboxeilla.
+  //STATES
 
-//STATES
+  const [listOfQuestions, setListOfQuestions] = useState
+  ([
+   [{ question: "What is the circumference of Earth?",
+      answer1:{ answer: "42300 km",
+                user_choice: false,
+                correctness: false
+              },
+      answer2:{ answer: "40075 km",
+                user_choice: false,
+                correctness: true
+              },
+      answer3:{ answer: "38560 km",
+                user_choice: false,
+                correctness: false
+              },
+      answer4:{ answer: "44075 km",
+                user_choice: false,
+                correctness: false
+              },
+      answer5:{ answer: "41075 km",
+                user_choice: false,
+                correctness: false
+              }
+    },
+    { question: "Who was the third president of the United States of America?",
+      answer1:{ answer: "Martin Van Buren",
+                user_choice: false,
+                correctness: false
+              },
+      answer2:{ answer: "Franklin Pierce",
+                user_choice: false,
+                correctness: false
+              },
+      answer3:{ answer: "Ulysses S. Grant",
+                user_choice: false,
+                correctness: false
+              },
+      answer4:{ answer: "Thomas Jefferson",
+                user_choice: false,
+                correctness: true
+              },
+      answer5:{ answer: "John Quincy Adams",
+                user_choice: false,
+                correctness: false
+              }
+    },
+    { question: "Which country invited gin?",
+      answer1:{ answer: "England",
+                user_choice: false,
+                correctness: false
+              },
+      answer2:{ answer: "Austria",
+                user_choice: false,
+                correctness: false
+              },
+      answer3:{ answer: "Switzerland",
+                user_choice: false,
+                correctness: false
+              },
+      answer4:{ answer: "Holland",
+                user_choice: false,
+                correctness: true
+              },
+      answer5:{ answer: "Germany",
+                user_choice: false,
+                correctness: false
+              }
+    },
+    { question: "What does a Geiger Counter measure?",
+      answer1:{ answer: "Seismic activity",
+                user_choice: false,
+                correctness: false
+              },
+      answer2:{ answer: "Voltage",
+                user_choice: false,
+                correctness: false
+              },
+      answer3:{ answer: "Radiation",
+                user_choice: false,
+                correctness: true
+              },
+      answer4:{ answer: "Gravitational waves",
+                user_choice: false,
+                correctness: false
+              },
+      answer5:{ answer: "Air humidity",
+                user_choice: false,
+                correctness: false
+              }
+    }],
 
-const [listOfQuestions, setListOfQuestions] = useState
-([
-  [{question: "What is the circumference of Earth?",
-    answer1: ["42300 km", false, false],
-    answer2: ["40075 km", false, true],
-    answer3: ["38560 km", false, false],
-    answer4: ["44075 km", false, false],
-    answer5: ["41075 km", false, false]
-  },
-  {question: "Who was the third president of the United States of America?",
-    answer1: ["Martin Van Buren", false, false],
-    answer2: ["Franklin Pierce", false, false],
-    answer3: ["Ulysses S. Grant", false, false],
-    answer4: ["Thomas Jefferson", false, true],
-    answer5: ["John Quincy Adams", false, false]
-  },
-  {question: "Which country invited gin?",
-    answer1: ["England", false, false],
-    answer2: ["Austria", false, false],
-    answer3: ["Switzerland", false, false],
-    answer4: ["Holland", false, true],
-    answer5: ["Germany", false, false]
-  },
-  {question: "What does a Geiger Counter measure?",
-    answer1: ["Seismic activity", false, false],
-    answer2: ["Voltage", false, false],
-    answer3: ["Radiation", false, true],
-    answer4: ["Gravitational waves", false, false],
-    answer5: ["Air humidity", false, false]
-  }],
+   [{ question: "What is Donald Trump's wife's firstname?",
+      answer1:{ answer: "Lisa",
+                user_choice: false,
+                correctness: false
+              },
+      answer2:{ answer: "Laura",
+                user_choice: false,
+                correctness: false
+              },
+      answer3:{ answer: "Catherine",
+                user_choice: false,
+                correctness: false
+              },
+      answer4:{ answer: "Melania",
+                user_choice: false,
+                correctness: true
+              },
+      answer5:{ answer: "Angela",
+                user_choice: false,
+                correctness: false
+              }
+    },
+    { question: "How many people has walked the surface of the Moon?",
+      answer1:{ answer: "12",
+                user_choice: false,
+                correctness: true
+              },
+      answer2:{ answer: "10",
+                user_choice: false,
+                correctness: false
+              },
+      answer3:{ answer: "9",
+                user_choice: false,
+                correctness: false
+              },
+      answer4:{ answer: "7",
+                user_choice: false,
+                correctness: false
+              },
+      answer5:{ answer: "6",
+                user_choice: false,
+                correctness: false
+              }
+    },
+    { question: "What is the third heaviest weight class called in the mixed martial arts organization UFC?",
+      answer1:{ answer: "Bantamweight",
+                user_choice: false,
+                correctness: false
+              },
+      answer2:{ answer: "Middleweight",
+                user_choice: false,
+                correctness: true
+              },
+      answer3:{ answer: "Welterweight",
+                user_choice: false,
+                correctness: false
+              },
+      answer4:{ answer: "Heavyweight",
+                user_choice: false,
+                correctness: false
+              },
+      answer5:{ answer: "Light-Heavyweight",
+                user_choice: false,
+                correctness: false
+              }
+    },
+    { question: "Which country has the most Nobel Prize winners?",
+      answer1:{ answer: "USA",
+                user_choice: false,
+                correctness: false
+              },
+      answer2:{ answer: "Belgium",
+                user_choice: false,
+                correctness: false
+              },
+      answer3:{ answer: "UK",
+                user_choice: false,
+                correctness: false
+              },
+      answer4:{ answer: "Italy",
+                user_choice: false,
+                correctness: false
+              },
+      answer5:{ answer: "France",
+                user_choice: false,
+                correctness: true
+              }
+    }]
+  ])
 
-  [{question: "What is Donald Trump's wife's firstname?",
-    answer1: ["Lisa", false, false],
-    answer2: ["Laura", false, false],
-    answer3: ["Catherine", false, false],
-    answer4: ["Melania", false, true],
-    answer5: ["Angela", false, false]
-  },
-  {question: "How many people has walked the surface of the Moon?",
-    answer1: ["12", false, true],
-    answer2: ["10", false, false],
-    answer3: ["9", false, false],
-    answer4: ["7", false, false],
-    answer5: ["6", false, false]
-  },
-  {question: "What is the third heaviest weight class called in the mixed martial arts organization UFC?",
-    answer1: ["Bantamweight", false, false],
-    answer2: ["Middleweight", false, true],
-    answer3: ["Welterweight", false, false],
-    answer4: ["Heavyweight", false, false],
-    answer5: ["Light-Heavyweight", false, false]
-  },
-  {question: "Which country has the most Nobel Prize winners?",
-    answer1: ["USA", false, false],
-    answer2: ["Belgium", false, false],
-    answer3: ["UK", false, false],
-    answer4: ["Italy", false, false],
-    answer5: ["France", false, true]
-  }]
-])
+  const [isDataInitialized, setIsDataInitialized] = useState(false)
+  const [isSwappingView, setIsSwappingView] = useState('')
+  const [menuChoice, setMenuChoice] = useState('')
+  const [showAnswers, setShowAnswers] = useState(false)
+  const [examScore, setExamScore] = useState(0)
 
+  //FUNCTIONS
 
-const [isDataInitialized, setIsDataInitialized] = useState(false)
-const [answers, setAnswers] = useState(false)
-const [exam, setExam] = useState('')
-const [isSwappingView, setIsSwappingView] = useState('')
+  const generateView = (menu_choice) => {
 
+    let exam_num = (menu_choice.charAt(menu_choice.length-1))-1
+    let rand = (Math.floor(Math.random()*10))
 
-//FUNCTIONS
-const openExams = (value) => {
-  
-  let rand = (Math.floor(Math.random()*10))
-  
-  if(value == "javascriptin_perusteet") {
-    setTimeout(() => {setIsSwappingView(false)}, rand*500)
-    if(!isSwappingView) {
-      return generateQuizboard(listOfQuestions)
-    }
-  }
-  else if(value == "haskellin_perusteet") {
-    setTimeout(() => {setIsSwappingView(false)}, rand*500)
-    if(!isSwappingView) {
-      return generateQuizboard(listOfQuestions)
-    }
-  }
-  else if(value == "admin") {
-    setTimeout(() => {setIsSwappingView(false)}, rand*500)
-    if(!isSwappingView) {
-      return generateQuizboard(listOfQuestions)
-    }
-  }
-}
-
-const showSelma = () => {
-  if(isSwappingView == true) {
-    return <img id="selma_koira" src="selma_koira.png" visibility="hidden" width="50" height="50" />
-  }
-}
-
-
-const generateQuizboard = (listOfQuestions) => {
-  let questions_amount_list = []
-
-  if(exam == "javascriptin_perusteet") {
-
-    let javascriptin_perusteet = listOfQuestions[0]
-
-    for(var i = 0; i < javascriptin_perusteet.length; i++) {
-      questions_amount_list.push(<div className="question_table">{generateQuestions(listOfQuestions[0].[i], Object.values(listOfQuestions[0].[i]).length-1)}</div>)
-    }
-
-    questions_amount_list.push(<Button id="näytä_vastaukset_button" onClick={() => showAnswers()}>NÄYTÄ VASTAUKSET</Button>)
-    return questions_amount_list
-
-  }
-  else if(exam == "haskellin_perusteet") {
-
-    let haskellin_perusteet = listOfQuestions[1]
-
-    for(var i = 0; i < haskellin_perusteet.length; i++) {
-      questions_amount_list.push(<div className="question_table">{generateQuestions(listOfQuestions[1].[i], Object.values(listOfQuestions[1].[i]).length-1)}</div>)
-    }
-
-    questions_amount_list.push(<Button id="näytä_vastaukset_button" onClick={() => showAnswers()}>NÄYTÄ VASTAUKSET</Button>)
-    return questions_amount_list
-  }
-  else if(exam == "admin") {
-    let exams_amount_list = []
-    let index
-    
-    for(var i = 0; i < listOfQuestions.length; i++) {
-      index = i
-      exams_amount_list.push(<div className="admin_question_table">{generateAdminExams(listOfQuestions, index)}</div>)
-    }
-    return exams_amount_list
-  }
-}
-
-const generateAdminExams = (listOfQuestions, index) => {
-  let question_list = []
-
-  for(var i = 0; i < listOfQuestions[index].length; i++) {
-    question_list.push(<div className="admin_question_content_table">{generateAdminFields(listOfQuestions, index, i)}</div>)
-  }
-  return question_list
-}
-
-const generateAdminFields = (listOfQuestions, index, i) => {
-  let fields_list = []
-
-  for(var j = 0; j < Object.values(listOfQuestions[index].[i]).length-1; j++) {
-    let ii = i
-    let jii = j
-    if(j == 0) {
-      fields_list.push(<div className="admin_question_content">
-                      <TextField 
-                      id="admin_question_field"
-                      id="outlined-basic"
-                      variant="outlined"
-                      size='small'
-                      inputProps="300"
-                      fullWidth={true}
-                      placeholder={Object.values(listOfQuestions[index].[i]).[j]}
-                      //value={}
-                      onChange={(event) => updateQuestion(event, index, ii, jii)}
-                      />
-                      <div className="delete_icon_div"><DeleteIcon className="delete_icon"/></div>
-                      </div>)
-    }
-    if(Object.values(listOfQuestions[index].[i]).[j+1] != null) {
-      fields_list.push(<div className="admin_answer_content">
-                        <Checkbox/>
-                        <TextField 
-                        id="admin_answer_field"
-                        id="outlined-basic"
-                        variant="outlined"
-                        size='small'
-                        fullWidth={true}
-                        placeholder={Object.values(listOfQuestions[index].[i]).[j+1].[0]}
-                        //value={}
-                        onChange={(event) => updateAnswer(event, index, ii, jii)}
-                        />
-                        <DeleteIcon className="delete_icon" onClick={() => deleteAnswer(index, ii, jii)}/>
-                        </div>)
-    }
-  }
-  fields_list.push(<div id="add_button_div"><AddCircleIcon className="add_icon"/></div>)
-  return fields_list
-}
-
-const updateQuestion = (event, index, i, j) => {
-  let list_of_questions_copy = [...listOfQuestions]
-  //console.log(Object.values(listOfQuestions[index].[i])[j])
-  Object.values(list_of_questions_copy[index].[i]).[j] = event.target.value
-  setListOfQuestions(list_of_questions_copy)
-  
-}
-
-const updateAnswer = (event, index, i, j) => {
-  let list_of_questions_copy = [...listOfQuestions]
-  Object.values(list_of_questions_copy[index].[i]).[j+1].[0] = event.target.value
-  setListOfQuestions(list_of_questions_copy)
-  //console.log(Object.values(list_of_questions_copy[index].[i]).[j+1].[0])
-}
-
-//Poistamiseen jäin. Filterillä en päässyt objectin rakenteeseen. Vaiheessa...
-const deleteAnswer = (index, i, j) => {
-  let list_of_questions_copy = [...listOfQuestions]
-  delete Object.keys(list_of_questions_copy[index].[i])[j+1]
-  delete Object.values(list_of_questions_copy[index].[i])[j+1].[0]
-  delete Object.values(list_of_questions_copy[index].[i])[j+1].[1]
-  delete Object.values(list_of_questions_copy[index].[i])[j+1].[2]
-  setListOfQuestions(list_of_questions_copy)
-}
-
-const generateQuestions = (questions, amount) => {
-  let question = questions
-  let length = amount
-  let question_list = []
-
-  for(var i = 0; i <= length; i++) {
-
-    if(i == 0) {
-      question_list.push(<div>{Object.values(question)[i]}</div>)
-      continue
-    }
-
-    let data_question = Object.values(question)[i]
-    let index = i
-
-    if(answers == false && data_question.[1] == true) {
-      question_list.push(<div className="question_content"><input className="checkbox" type="checkbox" onChange={(event) => checked(event, question, index)} checked/><p>{data_question}</p></div>)
-    }
-    else if (answers == false) {
-      question_list.push(<div className="question_content"><Checkbox onChange={(event) => checked(event, question, index)}/><p>{data_question}</p></div>)
-    }
-    else if (data_question.[1] == true && data_question.[2] == true){
-      question_list.push(<div className="question_content"><Checkbox checked={true} disabled={true}/><Checkbox checked={true}/><p>{data_question}</p></div>)
-    }
-    else if (data_question.[1] == true){
-      question_list.push(<div className="question_content"><Checkbox checked={true} disabled={true}/><Checkbox/><p>{data_question}</p></div>)
-    }
-    else if (data_question.[2] == true){
-      question_list.push(<div className="question_content"><Checkbox disabled={true}/><Checkbox checked={true}/><p>{data_question}</p></div>)
+    if(menu_choice != "admin" && menu_choice != '') {
+      setTimeout(() => {setIsSwappingView(false)}, rand*500)
+      if(!isSwappingView) {
+        return generateExam(listOfQuestions[exam_num], exam_num)
+      }
     }
     else {
-      question_list.push(<div className="question_content"><Checkbox disabled={true}/><Checkbox/><p>{data_question}</p></div>)
+      setTimeout(() => {setIsSwappingView(false)}, rand*500)
+      if(!isSwappingView) {
+        return generateAdminView(listOfQuestions)
+      }
+    }
+
+  }
+
+  const generateExam = (exam, exam_num) => {
+    let questions_list = []
+
+    for(let i = 0; i < exam.length; i++) {
+      questions_list.push(<Question 
+                            questions={listOfQuestions}
+                            updateListOfQuestions={updateListOfQuestions}
+                            exam_index={exam_num}
+                            question_index={i}
+                            answers={showAnswers}
+                            addToExamScore={addToExamScore}
+                            subtractFromExamScore={subtractFromExamScore}
+                          />)
+    }
+    
+    questions_list.push(<Button id="näytä_vastaukset_button" onClick={() => {toggleAnswers()}}>NÄYTÄ VASTAUKSET</Button>)
+    return questions_list
+  }
+
+  const generateAdminView = (list_of_questions) => {
+    let exam_panes = []
+
+    for(var exam_iterator = 0; exam_iterator < list_of_questions.length; exam_iterator++) {
+      exam_panes.push(<Paper id="paper">
+                      <DeleteIcon 
+                        id="exam_delete_icon" 
+                        onClick={() => {deleteExam(listOfQuestions, exam_iterator)}}
+                      />
+                      {generateAdminQuestions(listOfQuestions[exam_iterator], exam_iterator)}
+                      </Paper>)
+
+      
+    }
+    exam_panes.push(<div><AddCircleIcon onClick={() => {addExam(listOfQuestions, exam_iterator)}} id="exam_add_icon"/></div>)
+    return exam_panes
+  }
+
+  const generateAdminQuestions = (questions, exam_index) => {
+    let question_panes = []
+
+    for(let question_iterator = 0; question_iterator < questions.length; question_iterator++) {
+      question_panes.push(<AdminQuestion 
+                            question={questions[question_iterator]}
+                            listOfQuestions={listOfQuestions}
+                            updateListOfQuestions={updateListOfQuestions}
+                            exam_index={exam_index}
+                            question_index={question_iterator}
+                          />)
+    }
+
+    question_panes.push(<AddCircleIcon id="question_add_icon" onClick={() => {addQuestion(listOfQuestions, exam_index)}}/>)
+
+    return question_panes
+
+  }
+
+  const addExam = (list_of_questions, exam_index) => {
+    let list_of_questions_copy = [...list_of_questions]
+    list_of_questions_copy.splice(exam_index + 1, 0, new Array(new Object()))
+    setListOfQuestions(list_of_questions_copy)
+  }
+
+  const deleteExam = (list_of_questions, exam_index) => {
+    let list_of_questions_copy = [...list_of_questions]
+    let filtered = list_of_questions_copy.filter(item => item != list_of_questions_copy[exam_index])
+    setListOfQuestions(filtered)
+  }
+
+  const addQuestion = (list_of_questions, exam_index) => {
+    let list_of_questions_copy = [...list_of_questions]
+
+    let new_question = new Object()
+    new_question.question = ""
+
+    list_of_questions_copy[exam_index].push(new_question)
+    setListOfQuestions(list_of_questions_copy)
+  }
+
+  const updateListOfQuestions = (list_of_questions) => {
+    setListOfQuestions(list_of_questions)
+  }
+
+  const generateMenuButtons = (list_of_questions) => {
+    let button_list = []
+
+    for(let i = 0; i < listOfQuestions.length; i++) {
+      let menu_choice = "tentti" + (i + 1)
+      button_list.push(<Button id="tentti_button" onClick={() => {setMenuChoice(menu_choice);setIsSwappingView(true)}}>Tentti {i+1}</Button>)
+    }
+
+    button_list.push(<Button id="admin_button" onClick={() => {setMenuChoice("admin");setIsSwappingView(true)}}>ADMIN</Button>)
+    return button_list
+  }
+
+  const toggleAnswers = () => {
+    if(showAnswers == false) {
+      setShowAnswers(true)
+      setIsSwappingView(true)
+    }
+    else {
+      setShowAnswers(false)
+      setIsSwappingView(true)
     }
   }
-  return question_list
-}
 
-const checked = (event, question, index) => {
-  let answer_array = question
-  Object.values(answer_array)[index].[1] = event.target.checked
-  let json_object = JSON.parse(JSON.stringify(listOfQuestions))
-  setListOfQuestions(json_object)
-  console.log(listOfQuestions)
-  //console.log(Object.values(answer_array)[index])
-}
-
-const showAnswers = () => {
-  if(answers == false) {
-    setAnswers(true)
+  const addToExamScore = () => {
+    setExamScore(examScore + 1)
   }
-  else {
-    setAnswers(false)
-  }
-}
 
-useEffect(() => {
+  const subtractFromExamScore = () => {
+    setExamScore(examScore - 1)
+  }
+
+  const showSelma = () => {
+    if(isSwappingView == true) {
+      return <img id="selma_koira" src="selma_koira.png" visibility="hidden" width="50" height="50" />
+    }
+  }
+
+  /*const fetchData = async () => {
+    try {
+      
+      let result = await axios.get("http://localhost:4000/1")
+      console.log(result)
+
+      if(result.data.length > 0) {
+        return result
+      }
+      else {
+        throw ("Ongelma datan haussa! Koko on <= 0")
+      }
+    }
+    catch (exception) {
+      throw (exception)
+    }
+  }*/
+
+  useEffect(() => {
   
-  let temp_data = JSON.parse(window.localStorage.getItem("data"))
+    let temp_data = JSON.parse(window.localStorage.getItem("data"))
+    
+    if(temp_data == null) {
+      window.localStorage.setItem("data", JSON.stringify(listOfQuestions))
+      temp_data = listOfQuestions
+    }
   
-  if(temp_data == null) {
-    window.localStorage.setItem("data", JSON.stringify(listOfQuestions))
-    temp_data = listOfQuestions
-  }
+    setListOfQuestions(temp_data)
+    setIsDataInitialized(true)
+  
+  }, [])
+  
+  useEffect(() => {
+    
+    //fetchData()
+    if(isDataInitialized) {
+      window.localStorage.setItem("data", JSON.stringify(listOfQuestions))
+    }
+  
+  }, [listOfQuestions])
 
-  setListOfQuestions(temp_data)
-  setIsDataInitialized(true)
-
-}, [])
-
-useEffect(() => {
-
-  if(isDataInitialized) {
-    window.localStorage.setItem("data", JSON.stringify(listOfQuestions))
-  }
-
-}, [listOfQuestions])
-
-
-//JSX
+  //JSX
   return (
     <div>
       <div className="banner">
         <Button id="tentit_button">TENTIT</Button>
         <Button id="tietoaSovelluksesta_button" href="https://www.youtube.com/watch?v=sAqnNWUD79Q">TIETOA SOVELLUKSESTA</Button>
-        <div className="poistu_div">
-          <Button id="poistu_button">POISTU</Button>
-        </div>
+        <Button id="poistu_button">POISTU</Button>
       </div>
-      <div className="exam_button_container">
-        <Button id="haskellin_perusteet_button" onClick={() => {setExam("haskellin_perusteet");setIsSwappingView(true)}}>HASKELLIN PERUSTEET</Button>
-        <Button id="javascriptin_perusteet_button" onClick={() => {setExam("javascriptin_perusteet");setIsSwappingView(true)}}>JAVASCRIPTIN PERUSTEET</Button>
-        <Button id="admin_button" onClick={() => {setExam("admin");setIsSwappingView(true)}}>ADMIN</Button>
+      <div className="exams_menu">
+        {generateMenuButtons(listOfQuestions)}
+        {examScore}
       </div>
-      <div className="container">
+      <div>
         {showSelma()}
-        {openExams(exam)}
+        {generateView(menuChoice)}
       </div>
     </div>
-  );
+  )
 }
 
 export default App;

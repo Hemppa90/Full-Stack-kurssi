@@ -1,0 +1,52 @@
+#question_paper {
+    width: 50%;
+    margin: auto;
+    padding: 5px;
+}
+
+#admin_question_paper {
+    width: 92%;
+    margin: auto;
+    padding: 5px;
+}
+
+#question_text {
+    
+}
+
+#answer_textfield {
+    
+}
+
+#admin_question_textfield_div {
+    padding: 10px;
+}
+
+#admin_answer_textfield_div {
+    padding: 5px;
+}
+
+#correct_icon {
+    color: green;
+    
+}
+
+#correct_icon_div {
+    display: flex;
+}
+
+#delete_icon {
+    cursor: pointer;
+}
+
+#delete_icon:hover {
+    color: rgb(170, 170, 170);
+}
+
+#add_answer_icon {
+    cursor: pointer;
+}
+
+#add_answer_icon:hover {
+    color: rgb(170, 170, 170);
+}

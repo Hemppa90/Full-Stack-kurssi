@@ -1,0 +1,151 @@
+html {
+  background-color: #fafafa;
+}
+
+#chart {
+  width: 500px;
+}
+
+#paper {
+  width: 900px;
+  margin: auto;
+  margin-top: 20px;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  padding-top: 10px;
+}
+
+.banner {
+  width: 100%;
+  padding: 15px;
+  background-color: #3f51b5;
+  box-shadow: 1px 2px 5px #888888;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+#button {
+  color: white;
+  background-color: #3f51b5;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#tentti_button {
+  color: #3f51b5;
+}
+
+#admin_button {
+  color: white;
+}
+
+#tentit_button {
+  color: white;
+}
+
+#tietoaSovelluksesta_button {
+  color: white;
+}
+
+#poistu_button {
+  color: white;
+  float: right;
+  margin-right: 25px;
+}
+
+#näytä_vastaukset_button {
+  color: white;
+  background-color: #3f51b5;
+  margin-left: 470px;
+  box-shadow: 1px 2px 5px #888888;
+}
+
+.exams_menu {
+  margin: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 900px;
+}
+
+#selma_koira {
+  margin-left: 520px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #selma_koira {
+    animation: App-logo-spin infinite 2s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#exam_add_icon {
+  padding-top: 5px;
+  margin-left: 940px;
+  margin: auto;
+  cursor: pointer;
+}
+
+#exam_add_icon:hover {
+  color: rgb(170, 170, 170);
+}
+
+#exam_delete_icon {
+  float: right;
+  cursor: pointer;
+}
+
+#exam_delete_icon:hover {
+  color: rgb(170, 170, 170);
+}
+
+#question_add_icon {
+  padding-top: 5px;
+  cursor: pointer;
+}
+
+#question_add_icon:hover {
+  color: rgb(170, 170, 170);
+}
+
+#change_exam_name_div {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#exam_name_span {
+  color: #3f51b5;
+}
+
+#login_div {
+  margin: auto;
+  margin-top: 20px;
+}
+
+#login_text {
+  
+}
+
+#login_pane {
+  width: 40%;
+  margin: auto;
+}
+
+#login_pane_text_div {
+  height: 60%;
+  padding: 20px;
+}
+
+#login_pane_component_div {
+  margin: auto;
+  padding: 20px;
+}
